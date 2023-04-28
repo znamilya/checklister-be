@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:N*90nUk220F^@db.jmcenxelwvwemetwpkhr.supabase.co:5432/postgres"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Checklist {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  title     String   @db.VarChar(30)
+  items     Item[]
+}
+
+model Item {
+  id           String     @id @default(uuid())
+  title        String     @db.VarChar(30)
+  checklists   Checklist? @relation(fields: [checklistsId], references: [id], onDelete: Cascade)
+  checklistsId String?
+}
